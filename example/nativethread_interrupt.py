@@ -42,7 +42,7 @@ def get_engine():
 
 engine = get_engine()
 busy_beaver_addr = engine.get_function_address('run_forever')
-terse_addr = engine.get_function_address('finish_now')
+finish_quick_addr = engine.get_function_address('finish_now')
 
 def ok_cbak(obj):
     print("finished OK!")
@@ -53,11 +53,12 @@ def cancel_cbak(obj):
 def err_cbak(obj):
     print("I should never happen!")
 
-thr_id = nativethread.do_interruptibly(busy_beaver_addr, ok_cbak, cancel_cbak, err_cbak, None)
+thr_id_0 = nativethread.do_interruptibly(finish_quick_addr, ok_cbak, cancel_cbak, err_cbak, None)
+thr_id_1 = nativethread.do_interruptibly(busy_beaver_addr, ok_cbak, cancel_cbak, err_cbak, None)
 
 print("sleepy time now")
 time.sleep(1)
 
-nativethread.interrupt(thr_id)
+nativethread.interrupt(thr_id_1)
 
 
