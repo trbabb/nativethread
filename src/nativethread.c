@@ -4,7 +4,7 @@
 /************ Decls ************/
 
 
-static PyObject* do_interruptably(PyObject* self, PyObject* args);
+static PyObject* do_interruptibly(PyObject* self, PyObject* args);
 static PyObject* interrupt(PyObject* self, PyObject* args);
 
 typedef struct ThreadInfo {
@@ -28,10 +28,10 @@ static const char nativethread_doc[] =
 
 
 static PyMethodDef NativeThread_methods[] = {
-    {"do_interruptably",  do_interruptably, METH_VARARGS,
+    {"do_interruptibly",  do_interruptibly, METH_VARARGS,
      "Execute the given native function in a non-python thread.\n\n"
      
-     "    do_interruptably(native_fnptr, ok_cbak, cancel_cbak, err_cbak, arg)\n\n"
+     "    do_interruptibly(native_fnptr, ok_cbak, cancel_cbak, err_cbak, arg)\n\n"
      
      "Each `cbak` is a callable Python object. `ok_cbak` will be called if and\n"
      "when the native function returns normally. `cancel_cbak` will be called\n"
@@ -45,10 +45,10 @@ static PyMethodDef NativeThread_methods[] = {
      
     {"interrupt", interrupt, METH_VARARGS,
      "Make a system call to interrupt the thread named by an opaque handle\n"
-     "produced by `do_interruptably()`; the named thread will be brutally\n"
+     "produced by `do_interruptibly()`; the named thread will be brutally\n"
      "stopped mid-execution. Any resources acquired by that thread will\n"
      "not be freed unless they are released by the cancel callback passed\n"
-     "to `do_interruptably()`."},
+     "to `do_interruptibly()`."},
     
     {NULL, NULL, 0, NULL}        /* Sentinel */
 };
@@ -181,7 +181,7 @@ static PyObject* interrupt(PyObject* self, PyObject* args) {
 
 /* arguments are: 
    native_function_ptr, ok_cbak, cancel_cbak, err_cbak, arg */
-static PyObject* do_interruptably(PyObject* self, PyObject* args) {
+static PyObject* do_interruptibly(PyObject* self, PyObject* args) {
     long long      native_fnptr;
     int            failed;
     pthread_attr_t thr_attrs;

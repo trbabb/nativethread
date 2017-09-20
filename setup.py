@@ -18,7 +18,7 @@ native_module = Extension('nativethread',
 
 setup (name = 'nativethread',
        version = '1.0',
-       description = 'Run interruptable native code on non-python threads.',
+       description = 'Run interruptible native code on non-python threads.',
        author = 'Tim Babb',
        author_email = 'trbabb@gmail.com',
        long_description = "Interruptable threads for native code.",
