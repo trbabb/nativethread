@@ -61,4 +61,9 @@ time.sleep(1)
 
 nativethread.interrupt(thr_id_1)
 
+# if we exit before the interrupt is scheduled, then python will destruct
+# and clean itself up, since it isn't aware that there is another thread
+# which might call into it.
+
+time.sleep(5)
 
