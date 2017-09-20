@@ -16,3 +16,10 @@ unless they are freed within the `cancel_callback`.
 
 If the thread returns successfully, `ok_callback` will be invoked after the
 native function finishes.
+
+Supported platforms
+-------------------
+
+For now, supported on Linux only. This library uses POSIX threads, which 
+excludes windows. OS X does not support pthread_cancel, so sadly it will 
+not work on Darwin machines.
