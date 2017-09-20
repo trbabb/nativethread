@@ -1,7 +1,10 @@
 from setuptools import Extension, setup
-import os
+import os, sys
 
-if os.name != 'posix':
+# Darwin doesn't implement pthread_cancel. >:(
+# https://discussions.apple.com/thread/268013
+
+if os.name != 'posix' or sys.platform == 'Darwin':
     raise NotImplementedError(
         "This library relies on POSIX threads to operate and is not " +
         "supported by your OS. If you would like help extend support " +
